@@ -4,8 +4,10 @@ import Cart from "./pages/cart";
 import Detail from "./pages/detail";
 import Login from "./pages/login";
 import AdminDashboard from "./pages/admin/dashboard";
+import RootLayout from "./components/root-layout";
+import PageLayout from "./components/page-layout";
 
-export const router = createBrowserRouter([
+const routes = [
 	{
 		path: "/",
 		element: <Home />,
@@ -19,11 +21,22 @@ export const router = createBrowserRouter([
 		element: <Detail />,
 	},
 	{
-		path: "/auth/login",
+		path: "/login",
 		element: <Login />,
 	},
 	{
 		path: "/admin/dashboard",
 		element: <AdminDashboard />,
 	},
-]);
+];
+
+const routesWithRootLayout = routes.map((item) => ({
+	path: item.path,
+	element: (
+		<RootLayout>
+			<PageLayout>{item.element}</PageLayout>
+		</RootLayout>
+	),
+}));
+
+export const router = createBrowserRouter(routesWithRootLayout);
