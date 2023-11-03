@@ -1,5 +1,29 @@
-function App() {
-  return <h1 className="text-4xl">Hello Wordl!</h1>;
-}
+import { createBrowserRouter } from "react-router-dom";
+import Home from "./pages/home";
+import Cart from "./pages/cart";
+import Detail from "./pages/detail";
+import Login from "./pages/login";
+import AdminDashboard from "./pages/admin/dashboard";
 
-export default App;
+export const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <Home />,
+	},
+	{
+		path: "/cart",
+		element: <Cart />,
+	},
+	{
+		path: "/detail/:id",
+		element: <Detail />,
+	},
+	{
+		path: "/auth/login",
+		element: <Login />,
+	},
+	{
+		path: "/admin/dashboard",
+		element: <AdminDashboard />,
+	},
+]);
