@@ -1,21 +1,35 @@
 import { useSelector, useDispatch } from "react-redux";
 import { clearCarts } from "../../store/global/globalSlice";
 import { checkoutProducts } from "../../store/global/globalAction";
+import Toast from "../../components/toast";
 
 const Page = () => {
 	const dispatch = useDispatch();
 	const { carts } = useSelector((state) => state.global);
 
 	const handleClearCart = () => dispatch(clearCarts());
-	const handleCheckout = () =>
-		dispatch(
+	const handleCheckout = async () => {
+		await dispatch(
 			checkoutProducts({
 				products: carts.map((product) => ({
 					product: product._id,
 					quantity: product.quantity,
 				})),
 			})
-		);
+		).then((res) => {
+			if (res.meta.requestStatus !== "fulfilled") {
+				return Toast({
+					type: "error",
+					message: res.payload.response.data.message,
+				});
+			}
+			Toast({
+				type: "success",
+				message: "Checkout Succes",
+			});
+			dispatch(clearCarts());
+		});
+	};
 
 	return (
 		<div>

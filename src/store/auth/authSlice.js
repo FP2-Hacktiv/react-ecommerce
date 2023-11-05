@@ -28,7 +28,9 @@ const authSlice = createSlice({
 		builder.addCase(signIn.rejected, (state, { payload }) => {
 			state.isLoading = false;
 			state.isAuthenticated = false;
-			state.error = payload;
+			state.error = payload.response.data.message;
+			state.token = null;
+			state.user = null;
 		});
 		builder.addCase(signIn.fulfilled, (state, { payload }) => {
 			state.isLoading = false;
