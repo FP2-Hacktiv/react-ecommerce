@@ -37,3 +37,30 @@ export const checkoutProducts = createAsyncThunk(
 		}
 	}
 );
+
+export const updateProduct = createAsyncThunk(
+	"product/update",
+	async ({ data }, { rejectWithValue }) => {
+		try {
+			const response = await apiInstance.patch(
+				`/products/${data.id}`,
+				data.product
+			);
+			return response.data;
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);
+
+export const fetchReportSales = createAsyncThunk(
+	"admin/report-sales",
+	async (data, { rejectWithValue }) => {
+		try {
+			const response = await apiInstance.get("/orders/report-sales");
+			return response.data;
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);

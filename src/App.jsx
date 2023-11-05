@@ -6,6 +6,8 @@ import Login from "./pages/login";
 import AdminDashboard from "./pages/admin/dashboard";
 import RootLayout from "./components/root-layout";
 import PageLayout from "./components/page-layout";
+import ProtectedRoute from "./components/protected-route";
+import ProductList from "./pages/admin/product-list";
 
 const routes = [
 	{
@@ -14,7 +16,11 @@ const routes = [
 	},
 	{
 		path: "/cart",
-		element: <Cart />,
+		element: (
+			<ProtectedRoute>
+				<Cart />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/detail/:id",
@@ -22,11 +28,27 @@ const routes = [
 	},
 	{
 		path: "/login",
-		element: <Login />,
+		element: (
+			<ProtectedRoute>
+				<Login />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/admin/dashboard",
-		element: <AdminDashboard />,
+		element: (
+			<ProtectedRoute>
+				<AdminDashboard />
+			</ProtectedRoute>
+		),
+	},
+	{
+		path: "/admin/product-list",
+		element: (
+			<ProtectedRoute>
+				<ProductList />
+			</ProtectedRoute>
+		),
 	},
 ];
 
