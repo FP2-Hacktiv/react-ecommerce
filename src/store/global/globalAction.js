@@ -8,19 +8,20 @@ export const fetchAllProduct = createAsyncThunk(
 			const response = await apiInstance.get("/products");
 			return response.data;
 		} catch (error) {
-			rejectWithValue(error);
+			return rejectWithValue(error);
 		}
 	}
 );
 
 export const fetchSingleProduct = createAsyncThunk(
 	"product/fetch-single-product",
-	async (id, { rejectWithValue }) => {
+	async ({ id }, { rejectWithValue }) => {
 		try {
 			const response = await apiInstance.get(`/products/${id}`);
 			return response.data;
 		} catch (error) {
-			rejectWithValue(error);
+			console.log(error);
+			return rejectWithValue(error);
 		}
 	}
 );
@@ -32,7 +33,7 @@ export const checkoutProducts = createAsyncThunk(
 			const response = await apiInstance.post(`/orders`, data);
 			return response.data;
 		} catch (error) {
-			rejectWithValue(error);
+			return rejectWithValue(error);
 		}
 	}
 );
