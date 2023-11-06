@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchReportSales } from "../../../store/global/globalAction";
 import Toast from "../../../components/toast";
@@ -6,6 +6,7 @@ import Toast from "../../../components/toast";
 const Page = () => {
 	const dispatch = useDispatch();
 	const [content, setContent] = useState();
+	const { isLoading } = useSelector((state) => state.global);
 
 	const handleGetReportSales = async () => {
 		await dispatch(fetchReportSales()).then((res) => {
@@ -27,7 +28,7 @@ const Page = () => {
 	return (
 		<div className="flex flex-col">
 			<h1>Admin Dashboard Page</h1>
-			{content && JSON.stringify(content)}
+			{isLoading ? <h1>Loading...</h1> : JSON.stringify(content)}
 		</div>
 	);
 };
