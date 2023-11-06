@@ -27,7 +27,7 @@ const globalSlice = createSlice({
 			if (isProductInCart) {
 				state.carts = state.carts.map((item) =>
 					item?._id === payload._id
-						? { ...item, quantity: item.quantity + payload.buyStock }
+						? { ...item, quantity: payload.buyStock ? item.quantity + payload.buyStock : item.quantity + 1 }
 						: item
 				);
 			} else {
@@ -35,7 +35,7 @@ const globalSlice = createSlice({
 					...state.carts,
 					{
 						...payload,
-						quantity: payload.buyStock,
+						quantity: payload.buyStock ? payload.buyStock : 1,
 					},
 				];
 			}
