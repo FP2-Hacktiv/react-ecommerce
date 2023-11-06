@@ -28,8 +28,9 @@ const ProductInfo = ({ product }) => {
         message: "Login first to add product to your cart",
       });
     }
-
+    product.buyStock = quantity;
     dispatch(addToCart(product));
+    setQuantity(1);
     Toast({
       type: "success",
       message: `Success Add ${product.name} to Cart`,
