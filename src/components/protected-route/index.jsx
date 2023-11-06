@@ -10,6 +10,8 @@ const ProtectedRoute = ({ children }) => {
 
 	const { user, isAuthenticated } = useSelector((state) => state.auth);
 
+	const isAdminRoute = currentPathname.includes("admin");
+
 	useEffect(() => {
 		if (!isAuthenticated) {
 			navigate("/login");
@@ -19,19 +21,11 @@ const ProtectedRoute = ({ children }) => {
 			navigate("/");
 		}
 
-		if (
-			currentPathname === "/admin/dashboard" &&
-			isAuthenticated &&
-			user.isAdmin
-		) {
+		if (isAdminRoute && isAuthenticated && user.isAdmin) {
 			navigate("/admin/dashboard");
 		}
 
-		if (
-			currentPathname === "/admin/dashboard" &&
-			isAuthenticated &&
-			!user.isAdmin
-		) {
+		if (isAdminRoute && isAuthenticated && !user.isAdmin) {
 			navigate("/");
 		}
 	}, [isAuthenticated]);
