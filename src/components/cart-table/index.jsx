@@ -11,7 +11,7 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [subTotal, setSubTotal] = useState(0); // State untuk subTotal
+  const [subTotal, setSubTotal] = useState(0);
 
   const handleCheckout = async () => {
     await dispatch(
@@ -42,7 +42,6 @@ const ShoppingCart = () => {
     navigate(`/`);
   };
 
-  // Menghitung subTotal
   const calculateSubTotal = () => {
     let total = 0;
     carts.forEach((item) => {
@@ -51,7 +50,6 @@ const ShoppingCart = () => {
     setSubTotal(total);
   };
 
-  // Memanggil fungsi penghitungan saat komponen dimuat atau carts berubah
   React.useEffect(() => {
     calculateSubTotal();
   }, [carts]);

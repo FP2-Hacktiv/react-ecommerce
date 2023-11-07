@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../store/global/globalSlice";
+import { addToCart, removeFromCart } from "../../store/global/globalSlice";
 import { useState } from "react";
 const CartItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -11,12 +11,14 @@ const CartItem = ({ product }) => {
   const handleIncrease = () => {
     if (quantity < product.countInStock) {
       setQuantity(quantity + 1);
+      dispatch(addToCart(product));
     }
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      dispatch(addToCart(product));
     }
   };
 
