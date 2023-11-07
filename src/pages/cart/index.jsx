@@ -1,55 +1,22 @@
-import { useSelector, useDispatch } from "react-redux";
-import { clearCarts } from "../../store/global/globalSlice";
-import { checkoutProducts } from "../../store/global/globalAction";
-import Toast from "../../components/toast";
+import { useSelector } from "react-redux";
+import ShoppingCart from "../../components/cart-table";
 
 const Page = () => {
-	const dispatch = useDispatch();
-	const { carts } = useSelector((state) => state.global);
+  const { carts } = useSelector((state) => state.global);
 
-	const handleClearCart = () => dispatch(clearCarts());
-	const handleCheckout = async () => {
-		await dispatch(
-			checkoutProducts({
-				products: carts.map((product) => ({
-					product: product._id,
-					quantity: product.quantity,
-				})),
-			})
-		).then((res) => {
-			if (res.meta.requestStatus !== "fulfilled") {
-				return Toast({
-					type: "error",
-					message: res.payload.response.data.message,
-				});
-			}
-			Toast({
-				type: "success",
-				message: "Checkout Succes",
-			});
-			dispatch(clearCarts());
-		});
-	};
-
-	return (
-		<div>
-			Cart Page
-			{carts.length === 0 ? (
-				<h1>No Cart</h1>
-			) : (
-				<>
-					{carts.map((product) => (
-						<div key={product._id}>
-							<h1>{product.name}</h1>
-							<p>qty: {product.quantity}</p>
-						</div>
-					))}
-					<button onClick={handleClearCart}>clear carts</button>
-					<button onClick={handleCheckout}>Checkout</button>
-				</>
-			)}
-		</div>
-	);
+  return (
+    <div className="w-full">
+      {carts.length === 0 ? (
+        <div className="flex justify-center items-center">
+          <h1 className="font-semibold">No Cart</h1>
+        </div>
+      ) : (
+        <>
+          <ShoppingCart cartItems={carts} />
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Page;
