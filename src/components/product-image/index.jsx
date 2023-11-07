@@ -6,7 +6,7 @@ const ProductImage = ({ imageSrc, altText }) => {
       <img
         src={imageSrc}
         alt={altText}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-scale-down"
       />
     </div>
   );
