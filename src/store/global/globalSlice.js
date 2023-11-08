@@ -27,6 +27,27 @@ const globalSlice = createSlice({
 			if (isProductInCart) {
 				state.carts = state.carts.map((item) =>
 					item?._id === payload._id
+						? { ...item, quantity:item.quantity + 1 }
+						: item
+				);
+			} else {
+				state.carts = [
+					...state.carts,
+					{
+						...payload,
+						quantity: 1,
+					},
+				];
+			}
+		},
+		increaseQuantityCartProduct: (state, { payload }) => {
+			const isProductInCart = state.carts.find(
+				(product) => product?._id === payload._id
+			);
+
+			if (isProductInCart) {
+				state.carts = state.carts.map((item) =>
+					item?._id === payload._id
 						? { ...item, quantity: payload.buyStock ? item.quantity + payload.buyStock : item.quantity + 1 }
 						: item
 				);
@@ -38,6 +59,19 @@ const globalSlice = createSlice({
 						quantity: payload.buyStock ? payload.buyStock : 1,
 					},
 				];
+			}
+		},
+		decreaseQuantityCartProduct: (state, { payload }) => {
+			const isProductInCart = state.carts.find(
+				(product) => product?._id === payload._id
+			);
+
+			if (isProductInCart) {
+				state.carts = state.carts.map((item) =>
+					item?._id === payload._id
+						? { ...item, quantity: item.quantity - 1 }
+						: item
+				);
 			}
 		},
 		removeFromCart: (state, { payload }) => {
@@ -110,5 +144,5 @@ const globalSlice = createSlice({
 	},
 });
 
-export const { addToCart, removeFromCart, clearCarts } = globalSlice.actions;
+export const { addToCart, removeFromCart, clearCarts,increaseQuantityCartProduct, decreaseQuantityCartProduct } = globalSlice.actions;
 export default globalSlice.reducer;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { addToCart } from "../../store/global/globalSlice";
+import { increaseQuantityCartProduct } from "../../store/global/globalSlice";
 import Toast from "../toast";
 
 const ProductInfo = ({ product }) => {
@@ -29,7 +29,7 @@ const ProductInfo = ({ product }) => {
       });
     }
     product.buyStock = quantity;
-    dispatch(addToCart(product));
+    dispatch(increaseQuantityCartProduct(product));
     setQuantity(1);
     Toast({
       type: "success",
