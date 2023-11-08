@@ -41,27 +41,8 @@ const globalSlice = createSlice({
 			}
 		},
 		removeFromCart: (state, { payload }) => {
-			const isProductInCart = state.carts.find(
-				(product) => product._id === payload._id
-			);
-
-			if (isProductInCart) {
-				if (isProductInCart.quantity === 1) {
-					state.carts = state.carts.filter(
-						(cartItem) => cartItem._id !== payload._id
-					);
-				} else {
-					state.carts = state.carts.map((cartItem) =>
-						cartItem._id === payload._id
-							? {
-									...cartItem,
-									quantity: cartItem.quantity - 1,
-							  }
-							: cartItem
-					);
-				}
-			}
-		},
+			state.carts = state.carts.filter((cartItem) => cartItem._id !== payload._id);
+		},		
 		clearCarts: (state) => {
 			state.carts = [];
 		},
