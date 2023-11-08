@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../cart-item";
 import Toast from "../toast";
@@ -50,7 +50,7 @@ const ShoppingCart = () => {
     setSubTotal(total);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     calculateSubTotal();
   }, [carts]);
 
@@ -98,14 +98,14 @@ const ShoppingCart = () => {
         <div className="mx-4">
           <div className="flex justify-between mt-6">
             <span>Subtotal:</span>
-            <span>Rp.{subTotal}</span> {/* Menampilkan subTotal */}
+            <span>Rp.{subTotal}</span>
           </div>
           <div className="mx-4 flex justify-center mt-4">
             <hr className="w-full border border-slate-200" />
           </div>
           <div className="flex justify-between mt-6">
             <span>Total:</span>
-            <span>Rp.{subTotal}</span> {/* Menampilkan total */}
+            <span>Rp.{subTotal}</span>
           </div>
           <button
             className="bg-yellow-500 text-white w-full px-4 py-2 rounded-full mt-6"
