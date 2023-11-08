@@ -7,7 +7,7 @@ import {
 
 const ProductList = () => {
 	const dispatch = useDispatch();
-	const { products } = useSelector((state) => state.global);
+	const { products, isLoading } = useSelector((state) => state.global);
 
 	const handleGetAllProduct = () => {
 		dispatch(fetchAllProduct());
@@ -34,14 +34,17 @@ const ProductList = () => {
 	return (
 		<div>
 			ProductList
-			{products &&
+			{isLoading ? (
+				<h1>Loading...</h1>
+			) : (
 				products.map((item) => (
 					<div key={item._id} className="">
 						<h1>{item.name}</h1>
 						<p>Stock : {item.countInStock}</p>
 						<button onClick={() => handleUpdateProduct(item)}>Update</button>
 					</div>
-				))}
+				))
+			)}
 		</div>
 	);
 };
