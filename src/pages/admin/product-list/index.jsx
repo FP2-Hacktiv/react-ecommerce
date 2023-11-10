@@ -4,6 +4,7 @@ import {
 	fetchAllProduct,
 	updateProduct,
 } from "../../../store/global/globalAction";
+import Toast from "../../../components/toast";
 
 const ProductList = () => {
 	const dispatch = useDispatch();
@@ -24,7 +25,20 @@ const ProductList = () => {
 					},
 				},
 			})
-		).then(() => handleGetAllProduct());
+		)
+			.then(() => {
+				Toast({
+					type: "success",
+					message: `Update Stock ${item.name} Success`,
+				});
+				handleGetAllProduct();
+			})
+			.catch(() => {
+				Toast({
+					type: "error",
+					message: `Error Update Stock ${item.name}`,
+				});
+			});
 	};
 
 	useEffect(() => {
