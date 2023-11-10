@@ -27,14 +27,6 @@ const routes = [
 		element: <Detail />,
 	},
 	{
-		path: "/login",
-		element: (
-			<ProtectedRoute>
-				<Login />
-			</ProtectedRoute>
-		),
-	},
-	{
 		path: "/admin/dashboard",
 		element: (
 			<ProtectedRoute>
@@ -61,4 +53,14 @@ const routesWithRootLayout = routes.map((item) => ({
 	),
 }));
 
-export const router = createBrowserRouter(routesWithRootLayout);
+export const router = createBrowserRouter([
+	...routesWithRootLayout,
+	{
+		path: "/login",
+		element: (
+			<ProtectedRoute>
+				<Login />
+			</ProtectedRoute>
+		),
+	},
+]);
