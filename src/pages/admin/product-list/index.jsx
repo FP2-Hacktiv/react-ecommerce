@@ -5,6 +5,7 @@ import {
 	updateProduct,
 } from "../../../store/global/globalAction";
 import Toast from "../../../components/toast";
+import Loading from "../../../components/loading";
 
 const ProductList = () => {
 	const dispatch = useDispatch();
@@ -46,10 +47,12 @@ const ProductList = () => {
 	}, []);
 
 	return (
-		<div>
-			ProductList
+		<div
+			className={`"w-full flex justify-center items-center ${
+				isLoading ? "h-[calc(100vh-300px)]" : null
+			}`}>
 			{isLoading ? (
-				<h1>Loading...</h1>
+				<Loading />
 			) : (
 				products.map((item) => (
 					<div key={item._id} className="">
