@@ -5,10 +5,11 @@ import { addToCart } from "../../store/global/globalSlice";
 import troli from "../../assets/troli.svg";
 import Toast from "../../components/toast";
 import { Link } from "react-router-dom";
+import Loading from "../../components/loading";
 
 const Page = () => {
 	const dispatch = useDispatch();
-	const { isLoading, products } = useSelector((state) => state.global);
+	const { products, isLoading } = useSelector((state) => state.global);
 	const { isAuthenticated } = useSelector((state) => state.auth);
 
 	const handleGetAllProduct = () => {
@@ -35,11 +36,14 @@ const Page = () => {
 	}, []);
 
 	return (
-		<div>
+		<div
+			className={`"w-full flex justify-center items-center ${
+				isLoading ? "h-[calc(100vh-300px)]" : null
+			}`}>
 			{isLoading ? (
-				<h1>Loading....</h1>
+				<Loading />
 			) : (
-				<div className="grid grid-cols-3 gap-10">
+				<div className="grid grid-cols-3 gap-10 ">
 					{products.map((item) => (
 						<div
 							className="mb-3 flex flex-col shadow-2xl border-solid border-2 border-slate-500 rounded-2xl px-4 gap-2 justify-evenly"

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchReportSales } from "../../../store/global/globalAction";
 import Toast from "../../../components/toast";
+import Loading from "../../../components/loading";
 
 const Page = () => {
 	const dispatch = useDispatch();
@@ -26,9 +27,11 @@ const Page = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col">
-			<h1>Admin Dashboard Page</h1>
-			{isLoading ? <h1>Loading...</h1> : JSON.stringify(content)}
+		<div
+			className={`"w-full flex justify-center items-center ${
+				isLoading ? "h-[calc(100vh-300px)]" : null
+			}`}>
+			{isLoading ? <Loading /> : JSON.stringify(content)}
 		</div>
 	);
 };
