@@ -33,7 +33,9 @@ const Navbar = () => {
 	}, [currentPathname]);
 
 	return (
-		<div className="w-full h-24 bg-sky-900 justify-center items-center gap-80 inline-flex fixed top-0 ">
+		<div
+			className="w-full h-24 bg-sky-900 justify-center items-center gap-80 inline-flex fixed top-0 "
+			onMouseLeave={() => setIsDropdownShow(false)}>
 			<Link to="/" className="justify-center items-center gap-3 flex ">
 				<img className="w-16 h-16" src={LogoIcon} />
 				<h1 className="text-white text-2xl font-semibold">E-Markets</h1>
