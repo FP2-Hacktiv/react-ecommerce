@@ -21,10 +21,6 @@ const ProtectedRoute = ({ children }) => {
 			navigate("/");
 		}
 
-		if (isAdminRoute && isAuthenticated && user.isAdmin) {
-			navigate("/admin/dashboard");
-		}
-
 		if (isAdminRoute && isAuthenticated && !user.isAdmin) {
 			navigate("/");
 		}
