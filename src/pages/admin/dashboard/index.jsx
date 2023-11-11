@@ -6,32 +6,71 @@ import Loading from "../../../components/loading";
 
 const Page = () => {
 	const dispatch = useDispatch();
-	const [content, setContent] = useState();
+	const [content, setContent] = useState([]);
 	const { isLoading } = useSelector((state) => state.global);
 
 	const handleGetReportSales = async () => {
-		await dispatch(fetchReportSales()).then((res) => {
+		try {
+			const res = await dispatch(fetchReportSales());
+
 			if (res.meta.requestStatus !== "fulfilled") {
 				Toast({
 					type: "error",
 					message: "Failed Fetch",
 				});
+			} else {
+				setContent(res.payload.data);
 			}
-
-			setContent(res.payload.data);
-		});
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
 	};
+
+	const totalProfit = content.reduce(
+		(total, item) => total + item.totalProfit,
+		0
+	);
 
 	useEffect(() => {
 		handleGetReportSales();
 	}, []);
 
 	return (
-		<div
-			className={`"w-full flex justify-center items-center ${
-				isLoading ? "h-[calc(100vh-300px)]" : null
-			}`}>
-			{isLoading ? <Loading /> : JSON.stringify(content)}
+		<div>
+			{isLoading ? (
+				<div
+					className={`"w-full flex justify-center items-center  h-[calc(100vh-300px)]`}>
+					<Loading />
+				</div>
+			) : (
+				<div className="w-full mx-auto">
+					<h1 className="text-xl font-bold mb-4 text-center">Sales Recap</h1>
+					<table className="w-full border-collapse">
+						<thead>
+							<tr className="bg-slate-200 font-medium">
+								<td className="text-left py-2 px-4">Product Name</td>
+								<td className="text-left py-2 px-4">Total Sold</td>
+								<td className="text-left py-2 px-4">Product Price</td>
+								<td className="text-left py-2 px-4">Profit</td>
+							</tr>
+						</thead>
+						<tbody>
+							{content.map((item, index) => (
+								<tr key={index} className="border-b">
+									<td className="py-2 px-4">{item.productName}</td>
+									<td className="py-2 px-4">{item.totalSold}</td>
+									<td className="py-2 px-4">{item.productPrice}</td>
+									<td className="py-2 px-4">{item.totalProfit}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+					<div className="text-right mt-3">
+						{/* <hr className="" /> */}
+						<p className="font-semibold">Total Profit: {totalProfit}</p>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
