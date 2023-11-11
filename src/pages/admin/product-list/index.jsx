@@ -24,12 +24,10 @@ const ProductList = () => {
   };
 
   const handleDecrease = (productId) => {
-    if (quantities[productId] > 0) {
-      setQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [productId]: prevQuantities[productId] - 1,
-      }));
-    }
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(0, prevQuantities[productId] - 1),
+    }));
   };
 
   const handleUpdateProduct = async (item) => {
@@ -121,7 +119,12 @@ const ProductList = () => {
                       <div className="flex items-center">
                         <button
                           onClick={() => handleDecrease(item._id)}
-                          className="px-2 py-1 border border-gray-300 rounded-md"
+                          className={`px-2 py-1 border border-gray-300 rounded-md ${
+                            quantities[item._id] === 0
+                              ? "bg-gray-200 text-gray-400"
+                              : ""
+                          }`}
+                          disabled={quantities[item._id] === 0}
                         >
                           -
                         </button>
@@ -129,16 +132,20 @@ const ProductList = () => {
                           type="text"
                           id="quantity"
                           name="quantity"
-                          value={quantities[item._id] || item.countInStock}
+                          value={quantities[item._id] || 0}
                           onChange={(e) =>
                             setQuantities({
                               ...quantities,
-                              [item._id]: parseInt(e.target.value) || 0,
+                              [item._id]:
+                                e.target.value === ""
+                                  ? 0
+                                  : parseInt(e.target.value) || "",
                             })
                           }
                           inputMode="numeric"
                           className="w-10 mx-2 text-center"
                         />
+
                         <button
                           onClick={() => handleIncrease(item._id)}
                           className="px-2 py-1 border border-gray-300 rounded-md"
