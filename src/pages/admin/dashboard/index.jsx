@@ -36,7 +36,7 @@ const Page = () => {
 	}, []);
 
 	return (
-		<div>
+		<>
 			{isLoading ? (
 				<div
 					className={`"w-full flex justify-center items-center  h-[calc(100vh-300px)]`}>
@@ -71,7 +71,7 @@ const Page = () => {
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 
