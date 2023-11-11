@@ -64,6 +64,11 @@ const ProductList = () => {
 
   useEffect(() => {
     handleGetAllProduct();
+    const defaultQuantities = {};
+    products.forEach((item) => {
+      defaultQuantities[item._id] = item.countInStock || 0;
+    });
+    setQuantities(defaultQuantities);
   }, []);
 
   return (
@@ -118,7 +123,7 @@ const ProductList = () => {
                           type="text"
                           id="quantity"
                           name="quantity"
-                          value={quantities[item._id] || 0}
+                          value={quantities[item._id] || item.countInStock}
                           onChange={(e) =>
                             setQuantities({
                               ...quantities,
