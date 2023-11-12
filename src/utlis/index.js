@@ -13,3 +13,22 @@ export const getTokenFromLocalStorage = () => {
 		return null;
 	}
 };
+
+export const formatToIDR = (number) => {
+	if (isNaN(number)) {
+		return "Invalid input";
+	}
+
+	const [integerPart, decimalPart] = number.toFixed(2).toString().split(".");
+
+	const formattedIntegerPart = integerPart.replace(
+		/\B(?=(\d{3})+(?!\d))/g,
+		","
+	);
+
+	const result = `Rp ${formattedIntegerPart}${
+		decimalPart ? `.${decimalPart}` : ""
+	}`;
+
+	return result;
+};

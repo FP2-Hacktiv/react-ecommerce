@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchReportSales } from "../../../store/global/globalAction";
 import Toast from "../../../components/toast";
 import Loading from "../../../components/loading";
+import { formatToIDR } from "../../../utlis";
 
 const Page = () => {
 	const dispatch = useDispatch();
@@ -55,15 +56,19 @@ const Page = () => {
 								<tr key={index} className="border-b">
 									<td className="py-2 px-4">{item.productName}</td>
 									<td className="py-2 px-4">{item.totalSold}</td>
-									<td className="py-2 px-4">{item.productPrice}</td>
-									<td className="py-2 px-4">{item.totalProfit}</td>
+									<td className="py-2 px-4">
+										{formatToIDR(item.productPrice)}
+									</td>
+									<td className="py-2 px-4">{formatToIDR(item.totalProfit)}</td>
 								</tr>
 							))}
 						</tbody>
 					</table>
 					<div className="text-right mt-3">
 						{/* <hr className="" /> */}
-						<p className="font-semibold">Total Profit: {totalProfit}</p>
+						<p className="font-semibold">
+							Total Profit: {formatToIDR(totalProfit)}
+						</p>
 					</div>
 				</div>
 			)}
