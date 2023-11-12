@@ -64,14 +64,27 @@ const CartItem = ({ product }) => {
             -
           </button>
           <input
-            type="text"
+            type="number"
             id="quantity"
             name="quantity"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              if (value <= product.countInStock && value >= 1) {
+                setQuantity(value);
+              } else if (value > product.countInStock) {
+                setQuantity(product.countInStock);
+                Toast({
+                  type: "error",
+                  message: "Max Stock Reached",
+                });
+              }
+            }}
             inputMode="numeric"
             className="w-10 mx-2 text-center"
+            autoComplete="off"
           />
+
           <button
             onClick={handleIncrease}
             className={`px-2 py-1 border border-gray-300 rounded-md ${
