@@ -50,7 +50,6 @@ const ProductList = () => {
           message: `Update Stock ${item.name} Success`,
         });
         handleGetAllProduct();
-        setQuantities({});
       })
       .catch(() => {
         Toast({
