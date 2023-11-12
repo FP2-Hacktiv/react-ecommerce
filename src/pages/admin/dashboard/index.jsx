@@ -10,20 +10,16 @@ const Page = () => {
 	const { isLoading } = useSelector((state) => state.global);
 
 	const handleGetReportSales = async () => {
-		try {
-			const res = await dispatch(fetchReportSales());
-
+		await dispatch(fetchReportSales()).then((res) => {
 			if (res.meta.requestStatus !== "fulfilled") {
-				Toast({
+				return Toast({
 					type: "error",
-					message: "Failed Fetch",
+					message: res.payload.response.data.message,
 				});
-			} else {
-				setContent(res.payload.data);
 			}
-		} catch (error) {
-			console.error("Error fetching data:", error);
-		}
+
+			setContent(res.payload.data);
+		});
 	};
 
 	const totalProfit = content.reduce(

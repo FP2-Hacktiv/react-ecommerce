@@ -14,15 +14,11 @@ const ProtectedRoute = ({ children }) => {
 
 	useEffect(() => {
 		if (!isAuthenticated) {
-			navigate("/login");
-		}
-
-		if (currentPathname === "/login" && isAuthenticated) {
-			navigate("/");
+			return navigate("/login");
 		}
 
 		if (isAdminRoute && isAuthenticated && !user.isAdmin) {
-			navigate("/");
+			return navigate("/");
 		}
 	}, [isAuthenticated]);
 

@@ -8,7 +8,10 @@ const apiInstance = axios.create({
 });
 
 if (token) {
-	apiInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+	apiInstance.interceptors.request.use((config) => {
+		config.headers["Authorization"] = `Bearer ${token}`;
+		return config;
+	});
 }
 
 export default apiInstance;

@@ -20,21 +20,20 @@ const Page = () => {
 					password: password,
 				},
 			})
-		)
-			.then((res) => {
-				if (res.meta.requestStatus === "rejected") {
-					Toast({
-						type: "error",
-						message: res.payload.response.data.message,
-					});
-				} else {
-					Toast({
-						type: "success",
-						message: "Login success",
-					});
-				}
-			})
-			.catch((err) => console.log(err));
+		).then((res) => {
+			if (res.meta.requestStatus !== "fulfilled") {
+				return Toast({
+					type: "error",
+					message: res.payload.response.data.message,
+				});
+			}
+			Toast({
+				type: "success",
+				message: "Login success",
+			});
+
+			window.location.href = "/";
+		});
 	};
 
 	const handleEnterPress = (e) => {
@@ -42,6 +41,7 @@ const Page = () => {
 			handleSignIn();
 		}
 	};
+
 	return (
 		<div className="flex flex-row w-screen h-screen items-center">
 			<div className="w-1/3 bg-[#ecf4ff] p-10 flex items-center justify-center h-full">
