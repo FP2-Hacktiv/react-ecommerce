@@ -13,14 +13,30 @@ const ProtectedRoute = ({ children }) => {
 	const isAdminRoute = currentPathname.includes("admin");
 
 	useEffect(() => {
-		if (!isAuthenticated) {
-			return navigate("/login");
+		if (currentPathname == "/" && isAuthenticated && user.isAdmin) {
+			return navigate("/admin/dashboard");
+		} else if (isAuthenticated && user.isAdmin && currentPathname === "/cart") {
+			return navigate("/admin/dashboard");
+		} else if (
+			isAuthenticated &&
+			user.isAdmin &&
+			currentPathname.includes("/detail")
+		) {
+			return navigate("/admin/dashboard");
+		}
+
+		if (isAuthenticated && currentPathname === "/login") {
+			return navigate("/");
 		}
 
 		if (isAdminRoute && isAuthenticated && !user.isAdmin) {
 			return navigate("/");
 		}
-	}, [isAuthenticated]);
+
+		if (isAdminRoute && !isAuthenticated) {
+			return navigate("/");
+		}
+	}, [isAuthenticated, currentPathname]);
 
 	return children;
 };

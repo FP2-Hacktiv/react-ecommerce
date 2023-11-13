@@ -12,7 +12,11 @@ import ProductList from "./pages/admin/product-list";
 const routes = [
 	{
 		path: "/",
-		element: <Home />,
+		element: (
+			<ProtectedRoute>
+				<Home />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/cart",
@@ -24,7 +28,11 @@ const routes = [
 	},
 	{
 		path: "/detail/:id",
-		element: <Detail />,
+		element: (
+			<ProtectedRoute>
+				<Detail />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/admin/dashboard",
