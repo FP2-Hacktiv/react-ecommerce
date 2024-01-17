@@ -84,3 +84,14 @@ export const addProduct = createAsyncThunk(
     }
   }
 );
+
+export const deleteProduct = createAsyncThunk(
+  "admin/delete-product",
+  async ({ data }, { rejectWithValue }) => {
+    try {
+      const response = await apiInstance.delete(`/products/${data.id}`);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

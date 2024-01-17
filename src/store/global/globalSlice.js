@@ -7,6 +7,7 @@ import {
   fetchReportSales,
   updateProduct,
   addProduct,
+  deleteProduct,
 } from "./globalAction";
 
 const initialState = {
@@ -158,6 +159,18 @@ const globalSlice = createSlice({
       state.error = null;
     });
     builder.addCase(addProduct.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    });
+    builder.addCase(deleteProduct.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteProduct.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
     });

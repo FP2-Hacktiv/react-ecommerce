@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProduct,
+  deleteProduct,
   fetchAllProduct,
   updateProduct,
 } from "../../../store/global/globalAction";
 import Toast from "../../../components/toast";
 import Loading from "../../../components/loading";
 import Modal from "react-modal";
+import Swal from "sweetalert2";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -59,7 +61,6 @@ const ProductList = () => {
           type: "success",
           message: `Update Stok ${item.name} Berhasil`,
         });
-        handleGetAllProduct();
       })
       .catch(() => {
         Toast({
@@ -69,34 +70,74 @@ const ProductList = () => {
       });
   };
 
-  const handleAddProduct = async () => {
+  const handleDeleteProduct = async (item) => {
+    Swal.fire({
+      title: "Apakah Anda yakin??",
+      text: `Anda akan menghapus produk ${item.name}.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Ya, Hapus!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        performDelete(item);
+      }
+    });
+  };
+  const performDelete = async (item) => {
     await dispatch(
-      addProduct({
+      deleteProduct({
         data: {
-          productName,
-          productDescription,
-          brand,
-          category,
-          price,
-          stock,
-          image,
+          id: item._id,
         },
       })
     )
       .then(() => {
         Toast({
           type: "success",
-          message: `Berhasil Menambahkan Barang`,
+          message: `Berhasil Menghapus Produk ${item.name}`,
         });
-        handleGetAllProduct();
-        closeModal();
       })
       .catch(() => {
         Toast({
           type: "error",
-          message: `Error Menambahkan Barang`,
+          message: `Gagal Mengahapus Produk ${item.name}`,
         });
       });
+    await handleGetAllProduct();
+  };
+
+  const handleAddProduct = async () => {
+    try {
+      await dispatch(
+        addProduct({
+          data: {
+            productName,
+            productDescription,
+            brand,
+            category,
+            price,
+            stock,
+            image,
+          },
+        })
+      );
+
+      await handleGetAllProduct();
+
+      Toast({
+        type: "success",
+        message: `Berhasil Menambahkan Barang`,
+      });
+
+      closeModal();
+    } catch (error) {
+      Toast({
+        type: "error",
+        message: `Error Menambahkan Barang`,
+      });
+    }
   };
 
   const handleOpenModal = (item) => {
@@ -109,13 +150,12 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    handleGetAllProduct();
     const defaultQuantities = {};
     products.forEach((item) => {
       defaultQuantities[item._id] = item.countInStock || 0;
     });
     setQuantities(defaultQuantities);
-  }, []);
+  }, [products]);
 
   return (
     <>
@@ -360,7 +400,7 @@ const ProductList = () => {
                         </button>
                         <button
                           className="bg-red-500 text-white w-1/2 px-4 py-2 rounded-full"
-                          onClick={() => handleUpdateProduct(item)}
+                          onClick={() => handleDeleteProduct(item)}
                         >
                           Delete
                         </button>
