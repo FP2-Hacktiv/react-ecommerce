@@ -396,13 +396,13 @@ const ProductList = () => {
                           className="bg-yellow-500 text-white w-1/2 px-4 py-2 rounded-full"
                           onClick={() => handleUpdateProduct(item)}
                         >
-                          Update
+                          Ubah
                         </button>
                         <button
                           className="bg-red-500 text-white w-1/2 px-4 py-2 rounded-full"
                           onClick={() => handleDeleteProduct(item)}
                         >
-                          Delete
+                          Hapus
                         </button>
                       </div>
                     </td>
