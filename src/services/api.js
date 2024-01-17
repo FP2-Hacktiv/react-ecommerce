@@ -4,7 +4,7 @@ import { getTokenFromLocalStorage } from "../utlis";
 const token = getTokenFromLocalStorage();
 
 const apiInstance = axios.create({
-	baseURL: "https://online-shop-api-fp.vercel.app/api/v1",
+	baseURL: "http://localhost:5000/api/v1",
 });
 
 if (token) {
